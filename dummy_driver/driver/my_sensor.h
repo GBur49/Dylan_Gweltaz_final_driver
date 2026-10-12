@@ -5,13 +5,15 @@
 #include <zephyr/kernel.h>
 
 /* Configuration constante (provenant du DTS) */
-struct my_sensor_config {
+struct my_sensor_config
+{
 	int32_t initial_mc;
 	int32_t maximum_mc;
 };
 
 /* Etat propre a chaque instance (mutable) */
-struct my_sensor_data {
+struct my_sensor_data
+{
 	int32_t next_mc;
 };
 
