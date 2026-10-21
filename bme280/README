@@ -8,3 +8,19 @@
 west build -p always -b <board> sample
 west build -t run
 ```
+COMPTE RENDU Dylan GIMENEZ Gweltaz BURLOT
+
+Comme pour la partie du TP sur le dummy Driver", la première étape à été de modifier le fichier .dts ainsi que Kconfig. Dans le fichier dts les deux mêmes variables, initial et maximum millicelsuis ont été initialisées.
+Le Kconfig quant à lui ne change pas vraiment hormis pour "DT_HAS_BOSH_MY_BME280_ENABLED". Une fois ces deux fichiers modifié nous sommes concentrés sur la partie sensor.c
+
+Nous avons eu quelques difficultés à trouver les bonnes fonctions à appeler, par exemple, pour la fonction de lecture du registre I2c, nous souhaitons dans un premier temps utiliser la fonction I2C_read_dt hors celle ci n'était pas forcément la plus adaptée dans cette situation. Il était recommandé d'utiliser "i2c_burst_read_dt".Nous avons donc réussi les fonction permettant d'intégragir avec le capteur via l'I2C (Lecture / Ecriture / Demande disponnibilité du capteur / Attente d'une disponnibilité du capteur).
+
+Concernant les fonctions permettant de récupérer les facteurs de correction du capteur, nous n'avons pas compris la manière de récupérer ces informations ni où écrire les informations enregistrées
+D'après ce que nous avons pu voir via la datasheet constructeur,le capteur  a bien un calibration data sur 42 bits mais ca ne correspond pas à la somme de nos datas a pousser (16bits *3 + 16bits*9 + 8*6)
+Nous avons donc sauté cette fonction en sachant que les résultats bruts que nous allons obtenir ne sont pas forcément précis puisque les facteurs de corrections ne sont pas appliqués
+
+Nous nous sommes donc concentrés sur la partie de la mise en forme des données brutes du capteurs en récupérant les différents octets de données et en les réoraganisant correctement en faisant attention à l'orde des Octets (LSB/MSB)
+
+La dernière partie de lecture est encore un peu compliquée à comprendre malgré les explications, notamment l'intéret de reformarter les données alors que l'opération a déjà faite auparavant.
+
+Nous nous sommes arrêtés a cette dernière fonction et nous n'avons malheuresment pas pu faire fonctionner le capteur avant la fin du TP.
